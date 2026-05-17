@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Love Letter for Davin 💌</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --rose: #c0324a;
+    --rose-light: #f7dde3;
+    --cream: #faf6f0;
+    --ink: #2a1a1f;
+    --ink-soft: #5a3a42;
+    --gold: #b8924a;
+  }
+
+  body {
+    background-color: var(--cream);
+    font-family: 'Lora', serif;
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  .petals-bg {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+  }
+  .petal {
+    position: absolute; top: -60px; opacity: 0;
+    animation: fallPetal linear infinite;
+  }
+  @keyframes fallPetal {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+    5%   { opacity: 0.7; }
+    90%  { opacity: 0.5; }
+    100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+  }
+
+  .hero {
+    position: relative; z-index: 1;
+    text-align: center;
+    padding: 60px 24px 40px;
+    max-width: 760px;
+    width: 100%;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 9vw, 84px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 40px;
+  }
+  .hero-title em { font-style: italic; color: var(--rose); }
+
+  /* Envelope scales to match heading font size */
+  .envelope-wrap {
+    position: relative; z-index: 1;
+    margin: 0 auto 14px;
+    cursor: pointer;
+    width: clamp(200px, 38vw, 360px);
+    height: clamp(134px, 25vw, 240px);
+  }
+  .envelope-wrap svg { width: 100%; height: 100%; }
+  .envelope-wrap:hover .env-flap {
+    transform-origin: 50% 0%;
+    animation: flapOpen 0.4s ease forwards;
+  }
+  @keyframes flapOpen { to { transform: rotateX(-180deg); } }
+
+  .open-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--rose); color: #fff;
+    border: none; border-radius: 50px;
+    padding: 16px 36px;
+    font-family: 'Lora', serif; font-size: 15px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 24px rgba(192,50,74,0.25);
+  }
+  .open-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(192,50,74,0.35); }
+  .open-btn svg { width: 18px; height: 18px; }
+
+  /* Modal */
+  .overlay {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(42,26,31,0.65);
+    backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.4s;
+  }
+  .overlay.open { opacity: 1; pointer-events: all; }
+
+  /* Letter — wider & taller */
+  .letter {
+    background: #fffdf9;
+    border-radius: 4px;
+    max-width: 760px; width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 68px 80px 60px;
+    position: relative;
+    box-shadow: 0 24px 80px rgba(42,26,31,0.4), 0 0 0 1px rgba(184,146,74,0.3);
+    transform: scale(0.85) translateY(20px);
+    transition: transform 0.4s cubic-bezier(.16,1,.3,1);
+    scrollbar-width: thin;
+    scrollbar-color: var(--rose-light) transparent;
+  }
+  .overlay.open .letter { transform: scale(1) translateY(0); }
+
+  .letter::before {
+    content: ''; display: block; height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin-bottom: 44px;
+  }
+  .letter::after {
+    content: ''; display: block; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rose-light), transparent);
+    margin-top: 36px;
+  }
+
+  .close-btn {
+    position: absolute; top: 20px; right: 24px;
+    background: none; border: none; cursor: pointer;
+    font-size: 24px; color: var(--ink-soft); line-height: 1;
+    transition: color 0.2s;
+  }
+  .close-btn:hover { color: var(--rose); }
+
+  .letter-date {
+    font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 28px;
+  }
+  .letter-salutation {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px; font-style: italic;
+    color: var(--rose); margin-bottom: 26px;
+  }
+  .letter-body p {
+    font-size: 17px; line-height: 2;
+    color: var(--ink-soft); margin-bottom: 20px;
+  }
+  .letter-body p strong { color: var(--ink); font-weight: 600; }
+  .letter-closing {
+    margin-top: 36px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic; font-size: 18px; color: var(--ink);
+  }
+  .letter-sig {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px; font-style: italic;
+    color: var(--rose); margin-top: 8px;
+  }
+  .heart-row { text-align: center; font-size: 20px; margin: 32px 0 10px; letter-spacing: 10px; }
+
+  .floating-hearts {
+    position: fixed; bottom: 30px; right: 30px; z-index: 50;
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+  }
+  .float-heart { font-size: 22px; animation: floatUp 3s ease-in-out infinite; }
+  .float-heart:nth-child(2) { animation-delay: 1s; font-size: 14px; }
+  .float-heart:nth-child(3) { animation-delay: 2s; font-size: 18px; }
+  @keyframes floatUp {
+    0%, 100% { transform: translateY(0); opacity: 1; }
+    50% { transform: translateY(-12px); opacity: 0.6; }
+  }
+
+  @media (max-width: 600px) {
+    .letter { padding: 44px 28px 36px; }
+    .letter-body p { font-size: 15px; }
+    .letter-salutation { font-size: 24px; }
+  }
+ 
+  .burst-flower {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    animation: burst 1.5s ease-out forwards;
+  }
+  @keyframes burst {
+    0%   { transform: translate(0,0) scale(0.5) rotate(0deg); opacity: 1; }
+    100% { transform: translate(var(--x), var(--y)) scale(1.8) rotate(360deg); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="petals-bg" id="petalsBg"></div>
+
+<div class="floating-hearts">
+  <div class="float-heart">🌹</div>
+  <div class="float-heart">♡</div>
+  <div class="float-heart">🌹</div>
+</div>
+
+<section class="hero">
+  <h1 class="hero-title">Love Letter<br><em>for Davin</em></h1>
+
+  <div class="envelope-wrap" onclick="openLetter()">
+    <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2" y="18" width="116" height="60" rx="4" fill="#faf6f0" stroke="#b8924a" stroke-width="1.5"/>
+      <polygon class="env-flap" points="2,18 60,54 118,18" fill="#f7dde3" stroke="#b8924a" stroke-width="1.5"/>
+      <polyline points="2,78 46,46" stroke="#d4a0ac" stroke-width="1" fill="none"/>
+      <polyline points="118,78 74,46" stroke="#d4a0ac" stroke-width="1" fill="none"/>
+      <text x="60" y="50" text-anchor="middle" font-size="18" fill="#c0324a">♡</text>
+    </svg>
+  </div>
+
+  <p style="font-size:12px; color:var(--rose); margin-bottom:22px; letter-spacing:1px;">klik surat untuk membuka ↑</p>
+
+  <button class="open-btn" onclick="openLetter()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    Open me!
+  </button>
+</section>
+
+<div class="overlay" id="letterOverlay" onclick="closeIfBg(event)">
+  <div class="letter" role="dialog" aria-modal="true" aria-label="Love Letter">
+    <button class="close-btn" onclick="closeLetter()" aria-label="Tutup">✕</button>
+
+    <!-- EDIT SURAT -->
+    <p class="letter-date">16 Mei 2026</p>
+    <p class="letter-salutation">736 days and still counting!,</p>
+
+<div class="letter-body">
+  <p>
+    Happy Anniversary sayaang yang ke 2 tahun, sebenernya pengen banget ngomong ini pas lagi ketemu, kaya ngobrolin hal serius tentang kita karena selama dua tahun ini buat deeeptalk tentang kita tuh jarang banget.
+  </p>
+
+  <p>
+    Jangan mikir ini gapenting ya karena ini salah satu komponen yang bikin hubungan kita makin kuat. Aku tau kamu bukan word of affirmation orang nyaa tapi aku jg mauu banget kalau kamu bisa menginisiasi untuk kita ngobrol lebih dalam tentang kita berdua.
+  </p>
+
+  <p>
+    Tapi gapapa i'll go first, makasih ya sayang selama dua tahun ini kamu selalu jadi orang paling keren dan paling baik sedunia.
+  </p>
+
+  <p>
+    Makasih ya sayang karena udah bisa menghadapi sifat aku yang berbeda dari satu tahun pertama :)
+  </p>
+
+  <p>
+    Semoga kamu selalu sehat ya sayaangg, semogaa aku selama dua tahun ini ga bikin kamu sedih ya sayang.
+  </p>
+
+  <p>
+    Semoga kita bisa selalu bareng2 walau nantinya banyak rintangan yang harus dijalanin.
+  </p>
+
+  <p>
+    Makasih ya sayangg udah dateng dan built this relationship with me, aku harap kita berdua bisa jadi orang yang lebih baik lagi kedepannya.
+  </p>
+
+  <p>
+    Love u sayang!!
+  </p>
+</div>
+<!-- END EDIT SURAT -->
+
+    <div class="heart-row">❤ ❤ ❤</div>
+
+    <p class="letter-closing">With Love,</p>
+    <p class="letter-sig">— Naura💌</p>
+  </div>
+</div>
+
+<script>
+(function(){
+  const wrap = document.getElementById('petalsBg');
+  const symbols = ['🌸','🌺','🌹','❤','♡','✿'];
+  for(let i = 0; i < 18; i++){
+    const el = document.createElement('div');
+    el.className = 'petal';
+    el.textContent = symbols[i % symbols.length];
+    el.style.left = (Math.random()*100) + '%';
+    el.style.fontSize = (14 + Math.random()*14) + 'px';
+    const dur = 8 + Math.random()*10;
+    const delay = Math.random()*10;
+    el.style.animation = `fallPetal ${dur}s ${delay}s linear infinite`;
+    wrap.appendChild(el);
+  }
+})();
+ 
+function flowerBurst(){
+  const symbols = ['🌸','🌺','🌹','💖','♡','✨'];
+  for(let i = 0; i < 40; i++){
+    const flower = document.createElement('div');
+    flower.className = 'burst-flower';
+    flower.innerHTML = symbols[Math.floor(Math.random()*symbols.length)];
+    flower.style.left = window.innerWidth / 2 + 'px';
+    flower.style.top = window.innerHeight / 2 + 'px';
+    flower.style.fontSize = (16 + Math.random()*24) + 'px';
+    const x = (Math.random() - 0.5) * 900 + 'px';
+    const y = (Math.random() - 0.5) * 900 + 'px';
+    flower.style.setProperty('--x', x);
+    flower.style.setProperty('--y', y);
+    document.body.appendChild(flower);
+    setTimeout(() => { flower.remove(); }, 1500);
+  }
+}
+ 
+function openLetter(){
+  flowerBurst();
+  setTimeout(() => {
+    document.getElementById('letterOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }, 400);
+}
+function closeLetter(){
+  document.getElementById('letterOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeIfBg(e){
+  if(e.target === document.getElementById('letterOverlay')) closeLetter();
+}
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape') closeLetter();
+});
+</script>
+</body>
+</html>
